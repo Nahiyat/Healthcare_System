@@ -6,22 +6,26 @@ $id = $_GET['id'];
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Success</title>
+    <title>Patient Registration Success</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg1">
+
 <div class="overlay">
-    <div class="card">
+<div class="card">
 
-        <h2> Registration Successful</h2>
+<h2>Registration Successful</h2>
 
-        <p>Welcome <strong><?php echo $name; ?></strong></p>
-        <p>Your Patient ID: <b><?php echo $id; ?></b></p>
+<p>Welcome <b><?php echo $name; ?></b></p>
+<p>Your Patient ID: <b><?php echo $id; ?></b></p>
 
-        <br>
-        <button>Go to Dashboard -> </button>
+<br>
 
-    </div>
+<a href="patient_dashboard.php?id=<?php echo $id; ?>">
+<button>Go to Dashboard →</button>
+</a>
+
+</div>
 </div>
 
 </body>

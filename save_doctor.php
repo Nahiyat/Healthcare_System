@@ -18,7 +18,7 @@ if($password != $confirm) {
 }
 
 /* Auto ID */
-$doctor_id = "D" . time();
+$doctor_id = "D" . time() . rand(100,999);
 
 /* Insert */
 $sql = "INSERT INTO doctors 
@@ -28,8 +28,8 @@ VALUES
 
 if ($conn->query($sql) === TRUE) {
 
-    header("Location: doctor_login.php?msg=registered&name=$name&id=$doctor_id");
-    exit();
+    header("Location: doctor_success.php?name=" . urlencode($name) . "&id=" . urlencode($doctor_id));
+exit();
 
 } else {
     echo "Error: " . $conn->error;

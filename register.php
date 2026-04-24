@@ -14,7 +14,7 @@
         <form action="save_patient.php" method="POST">
 
             <input type="text" name="name" placeholder="Full Name" required>
-            <input type="date" name="date of birth " required>
+            <input type="date" name="date_of_birth" required>
 
             <select name="gender">
                 <option>Male</option>
