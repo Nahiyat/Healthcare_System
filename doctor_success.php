@@ -23,7 +23,7 @@ $id = $_GET['id'];
         <br>
 
         <a href="doctor_dashboard.php?id=<?php echo $id; ?>">
-            <button>Go to Dashboard</button>
+            <button>Go to Dashboard -> </button>
         </a>
 
     </div>

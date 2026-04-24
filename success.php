@@ -19,7 +19,7 @@ $id = $_GET['id'];
         <p>Your Patient ID: <b><?php echo $id; ?></b></p>
 
         <br>
-        <button>Go to Dashboard →</button>
+        <button>Go to Dashboard -> </button>
 
     </div>
 </div>
