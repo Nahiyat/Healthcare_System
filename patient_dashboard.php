@@ -1,11 +1,36 @@
 <?php
 include 'db.php';
+session_start();
 
-$id = $_GET['id'];
+/* ------------------------------
+   GET PATIENT ID
+--------------------------------*/
 
-$sql = "SELECT * FROM patients WHERE patient_id='$id'";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
+// Priority: session → URL → fallback empty
+if (isset($_SESSION['patient_id'])) {
+    $id = $_SESSION['patient_id'];
+} elseif (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $_SESSION['patient_id'] = $id; // store for next time
+} else {
+    $id = '';
+}
+
+/* ------------------------------
+   FETCH PATIENT DATA
+--------------------------------*/
+$row = null;
+
+if ($id != '') {
+    $stmt = $conn->prepare("SELECT * FROM patients WHERE patient_id = ?");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,16 +45,40 @@ $row = $result->fetch_assoc();
 
 <div class="card" style="width:450px; text-align:center;">
 
-<h2>Welcome <?php echo $row['full_name']; ?></h2>
-<p><b>ID:</b> <?php echo $row['patient_id']; ?></p>
+<!-- ------------------------------
+     SAFE DISPLAY (NO ERROR)
+-------------------------------- -->
+
+<h2>
+<?php
+if ($row) {
+    echo "Welcome " . htmlspecialchars($row['full_name']);
+} else {
+    echo "Welcome Guest";
+}
+?>
+</h2>
+
+<p>
+<b>Id:</b>
+<?php
+if ($row) {
+    echo htmlspecialchars($row['patient_id']);
+} else {
+    echo "Not Available";
+}
+?>
+</p>
 
 <hr>
 
 <h3>Dashboard</h3>
 
-<!-- BUTTONS -->
+<!-- ------------------------------
+     BUTTONS (KEEP ID SAFE)
+-------------------------------- -->
 
-<a href="doctor_list.php">
+<a href="doctor_list.php?id=<?php echo $id; ?>">
     <button>Take Appointment</button>
 </a>
 
@@ -44,6 +93,11 @@ $row = $result->fetch_assoc();
 <a href="medical_history.php?id=<?php echo $id; ?>">
     <button>Medical Records</button>
 </a>
+
+<a href="check_appointments.php?id=<?php echo $id; ?>">
+    <button>Check Appointment</button>
+</a>
+
 
 <a href="patient_login.php">
     <button class="back">Sign Out</button>
