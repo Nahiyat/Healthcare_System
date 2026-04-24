@@ -1,0 +1,129 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== Background Sections ===== */
+.bg1, .bg2, .bg3, .bg4, .bg5 {
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+/* Individual Background Images */
+.bg1 {
+    background-image: url('https://images.unsplash.com/photo-1691435702806-17d0aa7b02e9?q=80&w=1170&auto=format&fit=crop');
+}
+
+.bg2 {
+    background-image: url('https://images.pexels.com/photos/27907294/pexels-photo-27907294.jpeg');
+}
+
+.bg3 {
+    background-image: url('https://images.pexels.com/photos/7578808/pexels-photo-7578808.jpeg');
+}
+
+.bg4 {
+    background-image: url('https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg');
+}
+
+.bg5 {
+    background-image: url('https://images.pexels.com/photos/4021801/pexels-photo-4021801.jpeg');
+}
+
+/* Overlay */
+.overlay {
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Card UI */
+.card {
+    background: white;
+    padding: 25px;
+    width: 320px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Headings */
+h1 {
+    margin: 0 0 10px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+h3, h4, h5 {
+    margin: 8px 0;
+}
+
+/* Paragraph */
+p {
+    margin: 0 0 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Inputs */
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Textarea */
+textarea {
+    resize: none;
+    height: 60px;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    background: #2ec4b6;
+    color: white;
+    border: none;
+    padding: 9px;
+    margin-top: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1b9aaa;
+}
+
+/* Back Button */
+.back {
+    background: gray;
+}
+
+.back:hover {
+    background: #555;
+}
+
+/* Disabled */
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
