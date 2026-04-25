@@ -1,13 +1,31 @@
 <?php
 include 'db.php';
+session_start();
 
-/* Get patient ID */
-$patient_id = $_GET['id'];
+if (isset($_SESSION['patient_id'])) {
+    $patient_id = $_SESSION['patient_id'];
+} elseif (isset($_GET['id'])) {
+    $patient_id = $_GET['id'];
+} else {
+    $patient_id = '';
+}
 
-/* Fetch patient data */
-$sql = "SELECT * FROM patients WHERE patient_id='$patient_id'";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
+$row = null;
+if ($patient_id != '') {
+    $stmt = $conn->prepare("SELECT * FROM patients WHERE patient_id = ?");
+    $stmt->bind_param("s", $patient_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+    }
+    $stmt->close();
+}
+
+if (!$row) {
+    echo "Patient not found.";
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,39 +43,57 @@ $row = $result->fetch_assoc();
 
 <form action="update_patient.php" method="POST">
 
-    <input type="hidden" name="id" value="<?php echo $row['patient_id']; ?>">
+    <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['patient_id']); ?>">
 
-    <input type="text" name="name" value="<?php echo $row['name']; ?>" required>
+    <label>Full Name</label>
+    <input type="text" name="full_name" value="<?php echo htmlspecialchars($row['full_name']); ?>" required>
 
-    <input type="date" name="date_of_birth" value="<?php echo $row['date_of_birth']; ?>" required>
+    <label>Date of Birth</label>
+    <input type="date" name="date_of_birth" value="<?php echo htmlspecialchars($row['date_of_birth']); ?>" required>
 
+    <label>Gender</label>
     <select name="gender">
         <option <?php if($row['gender']=="Male") echo "selected"; ?>>Male</option>
         <option <?php if($row['gender']=="Female") echo "selected"; ?>>Female</option>
         <option <?php if($row['gender']=="Other") echo "selected"; ?>>Other</option>
     </select>
 
-    <input type="text" name="phone" value="<?php echo $row['phone']; ?>" required>
-    <input type="email" name="email" value="<?php echo $row['email']; ?>" required>
+    <label>Phone</label>
+    <input type="text" name="phone" value="<?php echo htmlspecialchars($row['phone']); ?>" required>
 
-    <textarea name="address"><?php echo $row['address']; ?></textarea>
+    <label>Email</label>
+    <input type="email" name="email" value="<?php echo htmlspecialchars($row['email']); ?>" required>
 
-    <input type="text" name="emergency" value="<?php echo $row['emergency']; ?>">
+    <label>Address</label>
+    <textarea name="address"><?php echo htmlspecialchars($row['address']); ?></textarea>
 
+    <label>Emergency Contact</label>
+    <input type="text" name="emergency_contact" value="<?php echo htmlspecialchars($row['emergency_contact']); ?>">
+    
+    <label>(leave blank to keep current)</small></label>
+    <input type="password" name="password" placeholder="New Password">
+
+    <label>Blood Type</label>
     <select name="blood_type">
-        <option <?php if($row['blood_type']=="A+") echo "selected"; ?>>A+</option>
-        <option <?php if($row['blood_type']=="A-") echo "selected"; ?>>A-</option>
-        <option <?php if($row['blood_type']=="B+") echo "selected"; ?>>B+</option>
-        <option <?php if($row['blood_type']=="B-") echo "selected"; ?>>B-</option>
-        <option <?php if($row['blood_type']=="AB+") echo "selected"; ?>>AB+</option>
-        <option <?php if($row['blood_type']=="AB-") echo "selected"; ?>>AB-</option>
-        <option <?php if($row['blood_type']=="O+") echo "selected"; ?>>O+</option>
-        <option <?php if($row['blood_type']=="O-") echo "selected"; ?>>O-</option>
+        <?php
+        $blood_types = ["A+","A-","B+","B-","AB+","AB-","O+","O-"];
+        foreach ($blood_types as $bt) {
+            $selected = ($row['blood_type'] == $bt) ? "selected" : "";
+            echo "<option value='$bt' $selected>$bt</option>";
+        }
+        ?>
+        
     </select>
 
+    <br>
     <button type="submit">Update</button>
 
 </form>
+
+<br>
+<a href="patient_dashboard.php">
+    <button class="back">Back to Dashboard</button>
+</a>
 
 </div>
 </div>

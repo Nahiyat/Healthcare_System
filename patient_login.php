@@ -1,4 +1,31 @@
-<?php include 'db.php'; ?>
+<?php 
+include 'db.php';
+session_start(); // ← was missing!
+
+if(isset($_POST['login'])){
+
+    $id   = $_POST['patient_id'];
+    $pass = $_POST['password'];
+
+    $stmt = $conn->prepare("SELECT * FROM patients WHERE patient_id = ? AND password = ?");
+    $stmt->bind_param("ss", $id, $pass);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+
+        // ✅ Set session properly
+        $_SESSION['patient_id'] = $row['patient_id'];
+
+        header("Location: patient_dashboard.php");
+        exit();
+
+    } else {
+        $error = "Invalid ID or Password";
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -13,13 +40,14 @@
 
 <h2>Patient Login</h2>
 
+<?php if(isset($error)): ?>
+    <p style="color:red;"><?php echo $error; ?></p>
+<?php endif; ?>
+
 <form method="POST">
-
-<input type="text" name="patient_id" placeholder="Patient ID" required>
-<input type="password" name="password" placeholder="Password" required>
-
-<button type="submit" name="login">Login</button>
-
+    <input type="text" name="patient_id" placeholder="Patient ID" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit" name="login">Login</button>
 </form>
 
 <br>
@@ -30,24 +58,3 @@
 
 </body>
 </html>
-
-<?php
-if(isset($_POST['login'])){
-
-    $id = $_POST['patient_id'];
-    $pass = $_POST['password'];
-
-    $sql = "SELECT * FROM patients WHERE patient_id='$id' AND password='$pass'";
-    $result = $conn->query($sql);
-
-    if($result->num_rows > 0){
-
-        echo "<script>
-        window.location='patient_dashboard.php?id=$id';
-        </script>";
-
-    } else {
-        echo "<script>alert('Invalid ID or Password');</script>";
-    }
-}
-?>

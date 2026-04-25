@@ -21,7 +21,6 @@ $result = $conn->query($sql);
 
 <tr>
     <th>Date</th>
-    <th>ID</th>
     <th>Doctor ID</th>
     <th>Status</th>
 </tr>
@@ -30,7 +29,6 @@ $result = $conn->query($sql);
 
 <tr>
     <td><?php echo $row['appointment_date']; ?></td>
-    <td><?php echo $row['patient_id']; ?></td>
     <td><?php echo $row['doctor_id']; ?></td>
 
     <td>

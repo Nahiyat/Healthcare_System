@@ -86,15 +86,15 @@ if ($row) {
     <button>Edit Profile</button>
 </a>
 
-<a href="patient_mailbox.php?id=<?php echo $id; ?>">
-    <button>Mailbox</button>
+<a href=" pay_the_bill.php?id=<?php echo $id; ?>">
+    <button>Pay Bill </button>
 </a>
 
-<a href="medical_history.php?id=<?php echo $id; ?>">
+<a href="medical_records.php?patient_id=<?php echo $id; ?>">
     <button>Medical Records</button>
 </a>
 
-<a href="check_appointments.php?id=<?php echo $id; ?>">
+<a href="check_appointment.php?id=<?php echo $id; ?>">
     <button>Check Appointment</button>
 </a>
 
