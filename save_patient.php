@@ -4,6 +4,8 @@ ini_set('display_errors', 1);
 
 include 'db.php';
 
+session_start();
+
 $name = $_POST['name'];
 $date_of_birth = $_POST['date_of_birth'];
 $gender = $_POST['gender'];
@@ -28,7 +30,9 @@ VALUES
 ('$patient_id','$name','$date_of_birth','$gender','$phone','$email','$address','$emergency','$blood_type','$password')";
 
 if ($conn->query($sql) === TRUE) {
-    header("Location: success.php?name=" . urlencode($name) . "&id=" . urlencode($patient_id));
+    $_SESSION['patient_id']   = $patient_id;
+    $_SESSION['name'] = $name;
+    header("Location: success.php?name=");
 exit();
 
 } else {

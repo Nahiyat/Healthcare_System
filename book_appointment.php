@@ -1,16 +1,17 @@
 <?php
 include 'db.php';
 
+session_start();
 /* Get values */
 $doctor_id = isset($_GET['doctor_id']) ? $_GET['doctor_id'] : '';
-$patient_id = isset($_GET['patient_id']) ? $_GET['patient_id'] : '';
+$patient_id = isset($_SESSION['patient_id']) ? $_GET['patient_id'] : '';
 
 /* Handle submit */
 if(isset($_POST['confirm'])) {
 
     $date = $_POST['date'];
     $doctor_id = $_POST['doctor_id'];
-    $patient_id = $_POST['patient_id'];
+    $patient_id = $_SESSION['patient_id'];
 
     /* -----------------------------
        SAME DAY BOOKING CHECK
@@ -71,11 +72,12 @@ if(isset($_POST['confirm'])) {
 <h2>Confirm Appointment</h2>
 
 <p>Doctor ID: <b><?php echo $doctor_id; ?></b></p>
+<p>Doctor ID: <b><?php echo $patient_id; ?></b></p>
 
 <form method="POST">
 
     <input type="hidden" name="doctor_id" value="<?php echo $doctor_id; ?>">
-    <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>">
+    <input type="hidden" name="patient_id" value="<?php echo $_SESSION['patient_id']; ?>">
 
     <input type="date" name="date" required>
 

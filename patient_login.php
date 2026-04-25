@@ -7,7 +7,7 @@ if(isset($_POST['login'])){
     $id   = $_POST['patient_id'];
     $pass = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM patients WHERE patient_id = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT patient_id, password FROM patients WHERE patient_id = ? AND password = ?");
     $stmt->bind_param("ss", $id, $pass);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -17,6 +17,9 @@ if(isset($_POST['login'])){
 
         // ✅ Set session properly
         $_SESSION['patient_id'] = $row['patient_id'];
+
+        $id=$row['patient_id'];
+        $_SESSION['patient_id'] = $id;
 
         header("Location: patient_dashboard.php");
         exit();

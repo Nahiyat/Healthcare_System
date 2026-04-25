@@ -1,8 +1,13 @@
 <?php
 include 'db.php';
 
+session_start();
 $sql = "SELECT * FROM doctors";
 $result = $conn->query($sql);
+
+$patient_id=$_SESSION['patient_id'];
+$patient_sql="SELECT * FROM patients WHERE patient_id=$patient_id";
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +19,7 @@ $result = $conn->query($sql);
 <body class="bg4">
 
 <div class="overlay">
-<div class="card" style="width:800px; text-align:left;">
+<div class="card" style="width:1100px; text-align:left;">
 
 <h2>Available Doctors</h2>
 
@@ -33,7 +38,7 @@ $result = $conn->query($sql);
 <?php while($row = $result->fetch_assoc()) { ?>
 
 <tr>
-    <td><?php echo $row['doctor_id']; ?></td>
+    <td><?php echo $row['doctor_id'], "<br>", $_SESSION['patient_id']; ?></td>
     <td><?php echo $row['name']; ?></td>
     <td><?php echo $row['specialization']; ?></td>
     <td><?php echo $row['phone']; ?></td>

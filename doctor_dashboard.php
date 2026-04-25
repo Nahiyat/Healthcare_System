@@ -96,6 +96,10 @@ if ($row) {
     Prescribe to Patients
 </a>
 
+<a class="menu-btn" href="create_bill.php?id=<?php echo htmlspecialchars($id); ?>">
+    Create Bills
+</a>
+
 <a class="menu-btn back" href="doctor_login.php">
     Sign Out
 </a>

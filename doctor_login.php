@@ -7,7 +7,8 @@ if(isset($_POST['login'])) {
     $id   = $_POST['doctor_id'];
     $pass = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM doctors WHERE doctor_id = ?");
+
+    $stmt = $conn->prepare("SELECT doctor_id, password FROM Doctors WHERE doctor_id = ? AND password = ?");
     $stmt->bind_param("ss", $id, $pass);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -15,7 +16,8 @@ if(isset($_POST['login'])) {
     if($result->num_rows > 0) {
 
         $row = $result->fetch_assoc();
-        $_SESSION['doctor_id'] = $row['doctor_id'];
+        $id=$row['doctor_id'];
+        $_SESSION['doctor_id'] = $id;
 
         header("Location: doctor_dashboard.php");
         exit();
@@ -41,7 +43,7 @@ if(isset($_POST['login'])) {
 
 <h2>Doctor Login</h2>
 
-<!-- ✅ SHOW ERROR -->
+<!-- SHOW ERROR -->
 <?php if(isset($error)) { ?>
     <p style="color:red;"><?php echo $error; ?></p>
 <?php } ?>
