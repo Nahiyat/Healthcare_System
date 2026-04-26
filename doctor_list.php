@@ -43,7 +43,7 @@ $patient_sql="SELECT * FROM patients WHERE patient_id=$patient_id";
     <td><?php echo $row['specialization']; ?></td>
     <td><?php echo $row['phone']; ?></td>
     <td><?php echo $row['age']; ?></td>
-    <td><?php echo $row['status']; ?></td>
+    <td><?php echo $row['Status']; ?></td>
     <td>
         <a href="book_appointment.php?doctor_id=<?php echo $row['doctor_id']; ?>">
             <button>Book</button>

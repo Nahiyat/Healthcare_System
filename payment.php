@@ -302,21 +302,21 @@ $result = $stmt->get_result();
                 <div class="bill-card">
                     <div class="bill-header">
                         <div class="bill-id">Bill #<?php echo $bill['bill_id']; ?></div>
-                        <div class="bill-amount">₹<?php echo number_format($bill['total_amount'], 2); ?></div>
+                        <div class="bill-amount">Tk.<?php echo number_format($bill['total_amount'], 2); ?></div>
                     </div>
 
                     <div class="bill-details">
                         <div class="detail-item">
                             <div class="detail-label">Consultation Fee</div>
-                            <div class="detail-value">₹<?php echo number_format($bill['consultation_fee'], 2); ?></div>
+                            <div class="detail-value">Tk.<?php echo number_format($bill['consultation_fee'], 2); ?></div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Medicine Cost</div>
-                            <div class="detail-value">₹<?php echo number_format($bill['medicine_cost'], 2); ?></div>
+                            <div class="detail-value">Tk.<?php echo number_format($bill['medicine_cost'], 2); ?></div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Discount</div>
-                            <div class="detail-value">₹<?php echo number_format($bill['discount_amount'], 2); ?></div>
+                            <div class="detail-value">Tk.<?php echo number_format($bill['discount_amount'], 2); ?></div>
                         </div>
                         <div class="detail-item">
                             <div class="detail-label">Due Date</div>

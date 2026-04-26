@@ -66,12 +66,12 @@ if (!$row) {
     <input type="number" name="age" value="<?php echo htmlspecialchars($row['age']); ?>" required>
 
     <label>Fee</label>
-    <input type="number" name="fee" value="<?php echo htmlspecialchars($row['fee']); ?>" required>
+    <input type="number" name="fee" value="<?php echo htmlspecialchars($row['Fee']); ?>" required>
 
     <label>Status</label>
     <select name="status">
-        <option value="available" <?php if($row['status']=="available") echo "selected"; ?>>Available</option>
-        <option value="unavailable" <?php if($row['status']=="unavailable") echo "selected"; ?>>Unavailable</option>
+        <option value="available" <?php if($row['Status']=="available") echo "selected"; ?>>Available</option>
+        <option value="unavailable" <?php if($row['Status']=="unavailable") echo "selected"; ?>>Unavailable</option>
     </select>
 
     <label> (leave blank to keep current)</small></label>

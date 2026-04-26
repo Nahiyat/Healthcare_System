@@ -7,7 +7,7 @@ if (!isset($_SESSION['patient_id'])) {
     die("Please login first");
 }
 
-$patient_id = intval($_SESSION['patient_id']);
+$patient_id = $_SESSION['patient_id'];
 
 // ✅ Method 1: Simple query without JOIN
 $sql = "SELECT bill_id, appointment_id, total_amount, consultation_fee, 
@@ -23,7 +23,7 @@ if (!$stmt) {
     die("Prepare failed: " . $conn->error);
 }
 
-$stmt->bind_param("i", $patient_id);
+$stmt->bind_param("s", $patient_id);
 
 if (!$stmt->execute()) {
     die("Execute failed: " . $stmt->error);
@@ -32,13 +32,13 @@ if (!$stmt->execute()) {
 $result = $stmt->get_result();
 
 // Get patient name separately
-$patient_sql = "SELECT name FROM Patient WHERE patient_id = ?";
+$patient_sql = "SELECT full_name FROM patients WHERE patient_id = ?";
 $patient_stmt = $conn->prepare($patient_sql);
-$patient_stmt->bind_param("i", $patient_id);
+$patient_stmt->bind_param("s", $patient_id);
 $patient_stmt->execute();
 $patient_result = $patient_stmt->get_result();
 $patient = $patient_result->fetch_assoc();
-$patient_name = $patient ? $patient['name'] : 'Unknown';
+$patient_name = $patient ? $patient['full_name'] : 'Unknown';
 $patient_stmt->close();
 ?>
 
@@ -64,7 +64,7 @@ $patient_stmt->close();
 </head>
 <body>
     <div class="container">
-        <h2>💳 Bills </h2>
+        <h2>💳 Bills of <?php echo htmlspecialchars($patient_name) ?></h2>
         
         <div class="info">
             <strong>Total Bills:</strong> <?php echo $result->num_rows; ?>

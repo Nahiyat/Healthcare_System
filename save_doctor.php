@@ -16,14 +16,12 @@ if($password !== $confirm) {
     exit();
 }
 
-// Hash the password before saving
-$hashed = password_hash($password, PASSWORD_DEFAULT);
 
 // Auto-generate doctor ID
 $doctor_id = 'DOC' . rand(1000, 9999);
 
 $stmt = $conn->prepare("INSERT INTO doctors (doctor_id, name, specialization, phone, age, fee, status, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("ssssssss", $doctor_id, $name, $specialization, $phone, $age, $fee, $status, $hashed);
+$stmt->bind_param("ssssssss", $doctor_id, $name, $specialization, $phone, $age, $fee, $status, $password);
 
 if($stmt->execute()) {
 

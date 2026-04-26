@@ -1,8 +1,16 @@
 <?php
 include 'db.php';
+session_start();
 
+if (isset($_SESSION['patient_id'])) {
+    $patient_id = $_SESSION['patient_id'];
+} elseif (isset($_GET['id'])) {
+    $patient_id = $_GET['id'];
+} else {
+    $patient_id = '';
+}
 /* GET DATA */
-$sql = "SELECT * FROM appointments";
+$sql = "SELECT * FROM appointments where patient_id= '$patient_id'";
 $result = $conn->query($sql);
 ?>
 
